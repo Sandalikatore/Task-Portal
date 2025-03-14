@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Exam & Scholarship Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('images/background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #1E3A8A;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 50px;
+        }
+        .nav {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .nav-box {
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .nav-box:nth-child(1) { background: #673AB7; } /* Home - Deep Purple */
+        .nav-box:nth-child(2) { background: #FF5722; } /* Dashboard - Deep Orange */
+        .nav-box:nth-child(3) { background: #03A9F4; } /* Test Portal - Light Blue */
+        .row .nav-box:nth-child(1) { background: grey; } /* Scholarship - Amber (Orangish Yellow) */
+        .row .nav-box:nth-child(2) { background: #4CAF50; } /* Admin Panel - Green */
+        .nav-box i {
+            font-size: 30px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .nav-box:hover {
+            transform: translateY(-10px);
+        }
+        .nav-box:active {
+            transform: translateY(5px);
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Ultimate Exam & Scholarship Portal</h1>
+        <div class="nav">
+            <div class="nav-box" onclick="location.href='homepage.html'">
+                <i class="fas fa-home"></i>Home
+            </div>
+            <div class="nav-box" onclick="location.href='dashboard.html'">
+                <i class="fas fa-tachometer-alt"></i>Dashboard
+            </div>
+            <div class="nav-box" onclick="location.href='test.html'">
+                <i class="fas fa-edit"></i>Test Portal
+            </div>
+        </div>
+        <div class="row">
+            <div class="nav-box" onclick="location.href='scholarship.html'">
+                <i class="fas fa-graduation-cap"></i>Scholarship
+            </div>
+            <div class="nav-box" onclick="location.href='admin.html'">
+                <i class="fas fa-user-shield"></i>Admin Panel
+            </div>
+        </div>
+    </div>
+</body>
+</html>

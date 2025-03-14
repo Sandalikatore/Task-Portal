@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F3F4F6;
+            color: #1E3A8A;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 50px;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #F3F4F6;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+        .section:hover {
+            background-color: #E5E7EB;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #1E3A8A;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #162D5A;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Dashboard</h1>
+        
+        <!-- Profile Summary -->
+        <div class="section">
+            <h3>Profile Summary</h3>
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Rank:</strong> 5</p>
+            <p><strong>Total Tests Taken:</strong> <span id="total-tests">12</span></p>
+            <p><strong>Performance Graph:</strong> [Graph Placeholder]</p>
+        </div>
+
+        <!-- Upcoming Tests & Live Exams -->
+        <div class="section">
+            <h3>Upcoming Tests & Live Exams</h3>
+            <ul id="upcoming-tests">
+                <li>Math Test - 25th Feb</li>
+                <li>Science Test - 28th Feb</li>
+            </ul>
+        </div>
+
+        <!-- Leaderboard -->
+        <div class="section">
+            <h3>Leaderboard</h3>
+            <p>1. Alice - 95%</p>
+            <p>2. Bob - 92%</p>
+            <p>3. Charlie - 90%</p>
+        </div>
+
+        <!-- Recommended Tests -->
+        <div class="section">
+            <h3>Recommended Tests</h3>
+            <p>AI-based suggestions here.</p>
+            <button onclick="takeTest()">Take a Test</button>
+        </div>
+
+        <!-- Wallet & Earnings -->
+        <div class="section">
+            <h3>Wallet & Earnings</h3>
+            <p>Prize Money: ₹<span id="wallet-balance">5000</span></p>
+            <input type="number" id="withdraw-amount" placeholder="Enter amount" min="1">
+            <button onclick="withdrawMoney()">Withdraw Money</button>
+        </div>
+    </div>
+
+    <script>
+        let totalTests = 12;
+        let walletBalance = 5000;
+
+        function withdrawMoney() {
+            let amount = parseInt(document.getElementById("withdraw-amount").value);
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+            if (amount > walletBalance) {
+                alert("Insufficient balance.");
+                return;
+            }
+            walletBalance -= amount;
+            document.getElementById("wallet-balance").innerText = walletBalance;
+            alert("₹" + amount + " withdrawn successfully!");
+        }
+
+        function takeTest() {
+            totalTests++;
+            document.getElementById("total-tests").innerText = totalTests;
+            alert("Test taken successfully! Your total test count has been updated.");
+        }
+    </script>
+</body>
+</html>

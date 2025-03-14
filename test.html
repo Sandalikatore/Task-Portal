@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #F3F4F6;
+            color: #1E3A8A;
+            background: url('images/background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+
+
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 50px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .question {
+            margin: 20px 0;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #1E3A8A;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: grey;
+        }
+
+        #webcam {
+            width: 100%;
+            max-width: 300px;
+            margin: auto;
+            display: block;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="login-container" class="container">
+        <h1>Login</h1>
+        <div class="input-container">
+            <span>👤</span>
+            <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+        <div class="input-container">
+            <span>🔑</span>
+            <input type="password" id="password" placeholder="Enter your password" required>
+        </div>
+        <button onclick="startTest()">Start Test</button>
+    </div>
+    <div id="test-container" class="container hidden">
+        <h1>Test Interface</h1>
+        <video id="webcam" autoplay></video>
+        <div id="timer">Time Left: 30:00</div>
+        <div id="question-container" class="question"></div>
+        <div class="navigation">
+            <button id="prev" onclick="prevQuestion()">Previous</button>
+            <button id="next" onclick="nextQuestion()">Next</button>
+        </div>
+        <button id="submit" onclick="submitTest()">Submit Test</button>
+        <button id="download" class="hidden" onclick="downloadCertificate()">Download Certificate</button>
+    </div>
+    <script>
+        let userName = "";
+        let questions = [
+            { q: "What is 2+2?", options: ["2", "3", "4", "5"], answer: "4" },
+            { q: "Capital of France?", options: ["Berlin", "Madrid", "Paris", "Lisbon"], answer: "Paris" }
+        ];
+        let currentQuestion = 0;
+        let answers = new Array(questions.length).fill(null);
+        let timeLeft = 1800;
+        let timer;
+        let webcamStream;
+
+        function startTest() {
+            userName = document.getElementById('name').value;
+            let password = document.getElementById('password').value;
+            if (!userName || !password) { alert("Please enter your name and password"); return; }
+            document.getElementById('login-container').classList.add('hidden');
+            document.getElementById('test-container').classList.remove('hidden');
+            startTimer();
+            displayQuestion();
+            startWebcam();
+        }
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = `Time Left: ${Math.floor(timeLeft / 60)}:${timeLeft % 60}`;
+                if (timeLeft === 0) submitTest();
+            }, 1000);
+        }
+        function displayQuestion() {
+            let q = questions[currentQuestion];
+            let container = document.getElementById('question-container');
+            container.innerHTML = `<h3>${q.q}</h3>` + q.options.map((opt, i) =>
+                `<input type="radio" name="answer" value="${opt}" id="opt${i}" ${answers[currentQuestion] === opt ? 'checked' : ''}>
+                 <label for="opt${i}">${opt}</label><br>`).join('');
+        }
+        function nextQuestion() {
+    let selected = document.querySelector('input[name="answer"]:checked');
+    if (selected) answers[currentQuestion] = selected.value;
+    
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion();
+    } else {
+        alert("You are already at the last question!");
+    }
+}
+
+        function prevQuestion() {
+            let selected = document.querySelector('input[name="answer"]:checked');
+            if (selected) answers[currentQuestion] = selected.value;
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+            }
+        }
+        function submitTest() {
+            clearInterval(timer);
+            stopWebcam();
+            document.getElementById('submit').disabled = true;
+            document.getElementById('download').classList.remove('hidden');
+            alert("Test Submitted Successfully!");
+        }
+        function downloadCertificate() {
+            let correct = answers.filter((ans, i) => ans === questions[i].answer).length;
+            let percentage = (correct / questions.length) * 100;
+            let certificate = `Certificate of Completion\n\nName: ${userName}\nScore: ${percentage.toFixed(2)}%`;
+            let blob = new Blob([certificate], { type: "text/plain" });
+            let a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "Certificate.txt";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+        function startWebcam() {
+            navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+                webcamStream = stream;
+                document.getElementById('webcam').srcObject = stream;
+            }).catch(error => console.error("Webcam access denied", error));
+        }
+        function stopWebcam() {
+            if (webcamStream) {
+                webcamStream.getTracks().forEach(track => track.stop());
+                document.getElementById('webcam').srcObject = null;
+            }
+        }
+    </script>
+</body>
+
+</html>

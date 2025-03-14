@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Ultimate Exam & Scholarship Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F3F4F6;
+            color: #1E3A8A;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 50px;
+        }
+        .hero {
+            padding: 30px;
+            background: #1E3A8A;
+            color: white;
+            border-radius: 8px;
+            font-size: 1.5em;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #F3F4F6;
+            border-radius: 8px;
+        }
+        .section:hover {
+            background-color: #E5E7EB;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #F97316;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #C05614;
+        }
+        /* Form Styling */
+        .form-container {
+            display: none;
+            width: 320px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: left;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .form-container h2 {
+            text-align: center;
+            color: #1E3A8A;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .form-container button {
+            width: 100%;
+            background-color: #1E3A8A;
+            border-radius: 5px;
+            padding: 10px;
+            color: white;
+            font-size: 16px;
+        }
+        .form-container button:hover {
+            background-color: #162B6F;
+        }
+        /* Payment Form */
+        .payment-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+        .payment-form input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .close-btn {
+            background: red;
+            margin-top: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    <script>
+        function toggleForm(formType) {
+            document.getElementById('loginForm').style.display = formType === 'login' ? 'block' : 'none';
+            document.getElementById('registerForm').style.display = formType === 'register' ? 'block' : 'none';
+        }
+
+        function showTests() {
+            let testContainer = document.getElementById('testContainer');
+            testContainer.style.display = testContainer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function buyPremium(testName, price) {
+            document.getElementById('paymentForm').style.display = 'block';
+            document.getElementById('selectedTest').innerText = testName + " - ₹" + price;
+        }
+
+        function closePaymentForm() {
+            document.getElementById('paymentForm').style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>Take Tests, Win Scholarships, and Improve Your Skills!</h1>
+        </div>
+
+        <div class="section">
+            <h2>Select Your Exam Category</h2>
+            <button onclick="location.href='examcategories.html?category=school'">School</button>
+            <button onclick="location.href='examcategories.html?category=college'">College</button>
+            <button onclick="location.href='examcategories.html?category=ugpg'">UG/PG</button>
+            <button>Govt</button>
+            <button>Competitive</button>
+            <button>Custom Tests</button>
+        </div>
+
+        <div class="section" onclick="showTests()">
+            <h2>Featured Tests</h2>
+            <p>Check out upcoming exams and trending mock tests.</p>
+        </div>
+
+        <div id="testContainer" class="test-container">
+            <h3>Available Test Packs</h3>
+            <div class="test-box">
+                <h3>CAT Mock Test</h3>
+                <p>Prepare for the CAT exam with real-time mock tests.</p>
+                <p class="price">Price: ₹499</p>
+                <button onclick="buyPremium('CAT Mock Test', 499)">Buy Premium</button>
+            </div>
+            <div class="test-box">
+                <h3>CET Exam Practice</h3>
+                <p>Exclusive practice set for CET aspirants.</p>
+                <p class="price">Price: ₹399</p>
+                <button onclick="buyPremium('CET Exam Practice', 399)">Buy Premium</button>
+            </div>
+            <div class="test-box">
+                <h3>UPSC General Studies</h3>
+                <p>Comprehensive test series for UPSC preparation.</p>
+                <p class="price">Price: ₹599</p>
+                <button onclick="buyPremium('UPSC General Studies', 599)">Buy Premium</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Pay ₹X, Take the Test, Win Prize Money!</h2>
+        </div>
+
+        <button onclick="toggleForm('login')">Login</button>
+        <button onclick="toggleForm('register')">Register</button>
+
+        <div id="loginForm" class="form-container">
+            <h2>Login</h2>
+            <input type="text" placeholder="Username" required><br>
+            <input type="password" placeholder="Password" required> <br>
+            <button>Log in</button>
+        </div>
+
+        <div id="registerForm" class="form-container">
+            <h2>Register</h2>
+            <input type="text" placeholder="Full Name" required> <br>
+            <input type="email" placeholder="Email" required>  <br>
+            <input type="password" placeholder="Password" required> <br>
+            <button>Register</button>
+        </div>
+
+        <div class="payment-form" id="paymentForm">
+            <h3>Complete Your Payment</h3>
+            <p id="selectedTest"></p>
+            <input type="text" placeholder="Card Number" required>
+            <input type="text" placeholder="Card Expiry (MM/YY)" required>
+            <input type="password" placeholder="CVV" required>
+            <button>Proceed to Pay</button>
+            <button class="close-btn" onclick="closePaymentForm()">Cancel</button>
+        </div>
+    </div>
+</body>
+</html>
